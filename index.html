@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Frontend Web Development Bootcamp YARIS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0c0f;
+      --surface: #111318;
+      --surface2: #181c24;
+      --border: #1e2430;
+      --accent: #3b82f6;
+      --accent2: #06b6d4;
+      --accent3: #f59e0b;
+      --react: #61dafb;
+      --green: #10b981;
+      --red: #ef4444;
+      --text: #e8ecf4;
+      --muted: #6b7a99;
+      --tag-bg: #1a2035;
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,12,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links {
+      display: flex; gap: 0.25rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--surface2); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 120px 2rem 80px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--accent2);
+      background: rgba(6,182,212,0.08);
+      border: 1px solid rgba(6,182,212,0.2);
+      padding: 4px 12px; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-badge span { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+    h1 .highlight {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .meta-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; color: var(--muted);
+    }
+    .meta-item .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-blue { background: var(--accent); }
+    .dot-cyan { background: var(--accent2); }
+    .dot-amber { background: var(--accent3); }
+
+    .teaching-pills {
+      display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2rem;
+    }
+    .pill {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .pill.active {
+      border-color: rgba(59,130,246,0.4);
+      background: rgba(59,130,246,0.08);
+      color: var(--accent);
+    }
+
+    .tools-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+    .tools-row h3 {
+      font-family: 'DM Mono', monospace; font-size: 0.7rem;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0.75rem;
+    }
+    .tool-group h4 {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      color: var(--accent2); margin-bottom: 0.4rem; letter-spacing: 0.05em;
+    }
+    .tool-group ul { list-style: none; }
+    .tool-group li {
+      font-size: 0.82rem; color: var(--muted); padding: 2px 0;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tool-group li::before { content: '→'; font-size: 0.65rem; color: var(--accent); }
+
+    /* ─── SECTION HEADINGS ─── */
+    .section-label {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em;
+      padding: 0 2rem;
+      max-width: 1100px; margin: 0 auto 1.5rem;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* ─── DAYS GRID ─── */
+    .days-wrapper {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 2rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .day-card {
+      background: var(--surface);
+      padding: 1.5rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .day-card:hover { background: var(--surface2); }
+    .day-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+    }
+    .day-card.html::before { background: linear-gradient(90deg, #ef4444, #f97316); }
+    .day-card.css::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .day-card.js::before { background: linear-gradient(90deg, #f59e0b, #eab308); }
+    .day-card.react::before { background: linear-gradient(90deg, #61dafb, #6366f1); }
+    .day-card.git::before { background: linear-gradient(90deg, #10b981, #3b82f6); }
+
+    .day-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    .day-number {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      color: var(--muted); letter-spacing: 0.1em;
+    }
+    .day-tag {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      padding: 3px 9px; border-radius: 100px;
+    }
+    .tag-html { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.2); }
+    .tag-css { background: rgba(59,130,246,0.12); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+    .tag-js { background: rgba(245,158,11,0.12); color: #fcd34d; border: 1px solid rgba(245,158,11,0.2); }
+    .tag-react { background: rgba(97,218,251,0.12); color: #61dafb; border: 1px solid rgba(97,218,251,0.2); }
+    .tag-git { background: rgba(16,185,129,0.12); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.2); }
+
+    .day-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 0.9rem;
+      line-height: 1.2;
+    }
+
+    .day-section { margin-bottom: 0.9rem; }
+    .day-section-label {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.4rem; display: flex; align-items: center; gap: 6px;
+    }
+    .day-section-label .icon { font-size: 0.75rem; }
+    .topic-list, .mistake-list { list-style: none; }
+    .topic-list li, .mistake-list li {
+      font-size: 0.8rem; color: var(--muted);
+      padding: 2px 0; display: flex; align-items: flex-start; gap: 6px;
+    }
+    .topic-list li::before { content: '·'; color: var(--accent); flex-shrink: 0; }
+    .mistake-list li::before { content: '!'; font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--red); flex-shrink: 0; margin-top: 2px; }
+
+    .project-box {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.9rem;
+    }
+    .project-box .proj-label {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      color: var(--accent2); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+    .project-box p { font-size: 0.8rem; color: var(--text); }
+    .project-box .sub-items { list-style: none; margin-top: 4px; }
+    .project-box .sub-items li { font-size: 0.75rem; color: var(--muted); display: flex; gap: 6px; }
+    .project-box .sub-items li::before { content: '—'; color: var(--border); }
+
+    .exercise-box {
+      background: rgba(245,158,11,0.05);
+      border: 1px solid rgba(245,158,11,0.15);
+      border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.9rem;
+    }
+    .exercise-box .ex-label {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      color: var(--accent3); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+    .exercise-box p { font-size: 0.8rem; color: var(--text); }
+
+    .hw-box {
+      background: rgba(16,185,129,0.05);
+      border: 1px solid rgba(16,185,129,0.15);
+      border-radius: 8px; padding: 0.75rem 1rem; margin-bottom: 0.9rem;
+    }
+    .hw-box .hw-label {
+      font-family: 'DM Mono', monospace; font-size: 0.6rem;
+      color: var(--green); text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+    }
+    .hw-box p { font-size: 0.8rem; color: var(--text); }
+    .hw-box ul { list-style: none; margin-top: 4px; }
+    .hw-box ul li { font-size: 0.75rem; color: var(--muted); display: flex; gap: 6px; }
+    .hw-box ul li::before { content: '→'; font-size: 0.65rem; color: var(--green); }
+
+    .repo-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--accent); text-decoration: none;
+      border: 1px solid rgba(59,130,246,0.3);
+      background: rgba(59,130,246,0.06);
+      padding: 6px 12px; border-radius: 8px;
+      margin-top: 0.75rem;
+      transition: all 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+    .repo-link:hover {
+      background: rgba(59,130,246,0.15);
+      border-color: rgba(59,130,246,0.5);
+      transform: translateY(-1px);
+    }
+    .repo-link svg { flex-shrink: 0; }
+
+    /* ─── CLASS STRUCTURE ─── */
+    .structure-section {
+      max-width: 1100px; margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .structure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden;
+    }
+    .struct-item {
+      background: var(--surface); padding: 1.25rem 1rem; text-align: center;
+    }
+    .struct-time {
+      font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 800;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.3rem;
+    }
+    .struct-desc { font-size: 0.78rem; color: var(--muted); }
+
+    /* ─── SKILLS ─── */
+    .skills-section {
+      max-width: 1100px; margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .skill-card h4 {
+      font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .skill-card h4 .badge {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .skill-card ul { list-style: none; }
+    .skill-card li {
+      font-size: 0.78rem; color: var(--muted); padding: 2px 0;
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .skill-card li::before { content: '·'; color: var(--accent); }
+
+    /* ─── LEARNING PATH ─── */
+    .path-section {
+      max-width: 1100px; margin: 0 auto 4rem;
+      padding: 0 2rem;
+    }
+    .path-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .path-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+    .path-card h4 {
+      font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700;
+      margin-bottom: 0.75rem; color: var(--text);
+    }
+    .path-card ul { list-style: none; }
+    .path-card li {
+      font-size: 0.78rem; color: var(--muted); padding: 2px 0;
+      display: flex; gap: 6px; align-items: flex-start;
+    }
+    .path-card li::before { content: '→'; font-size: 0.65rem; color: var(--accent2); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 90px 1rem 60px; }
+      .days-wrapper, .structure-section, .skills-section, .path-section { padding: 0 1rem; }
+      .section-label { padding: 0 1rem; }
+      .days-wrapper { grid-template-columns: 1fr; }
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">FrontendBootcamp</div>
+  <ul class="nav-links">
+    <li><a href="#html">HTML</a></li>
+    <li><a href="#css">CSS</a></li>
+    <li><a href="#js">JavaScript</a></li>
+    <li><a href="#react">React</a></li>
+    <li><a href="#git">Git & Deploy</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#path">Next Steps</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><span></span> Bootcamp Curriculum by Jamleck Kibet</div>
+  <h1>Yaris <span class="highlight">Frontend</span><br/>Web Development<br/>Bootcamp</h1>
+
+  <div class="hero-meta">
+    <div class="meta-item"><span class="dot dot-blue"></span> 10 Days Total</div>
+    <div class="meta-item"><span class="dot dot-cyan"></span> 2 Hours / Day</div>
+    <div class="meta-item"><span class="dot dot-amber"></span> 30% Explanation · 70% Live Coding</div>
+  </div>
+
+  <div class="teaching-pills">
+    <div class="pill">HTML &amp; Semantics</div>
+    <div class="pill">CSS &amp; Layout</div>
+    <div class="pill">JavaScript</div>
+    <div class="pill">React</div>
+    <div class="pill">Git &amp; GitHub</div>
+    <div class="pill active">Live Project: SmartShop</div>
+  </div>
+
+  <div class="tools-row">
+    <h3>Tools &amp; Setup — Day 1</h3>
+    <div class="tools-grid">
+      <div class="tool-group">
+        <h4>Required Tools</h4>
+        <ul>
+          <li>VS Code</li>
+          <li>Google Chrome</li>
+          <li>Node.js</li>
+          <li>Git</li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h4>VS Code Extensions</h4>
+        <ul>
+          <li>Live Server</li>
+          <li>Prettier</li>
+          <li>ES7 React Snippets</li>
+        </ul>
+      </div>
+      <div class="tool-group">
+        <h4>AI Tools</h4>
+        <ul>
+          <li>ChatGPT</li>
+          <li>Claude</li>
+          <li>Lovable</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CLASS STRUCTURE ── -->
+<div class="section-label" id="structure">Class Structure</div>
+<div class="structure-section">
+  <div class="structure-grid">
+    <div class="struct-item">
+      <div class="struct-time">10<span style="font-size:1rem">min</span></div>
+      <div class="struct-desc">Recap</div>
+    </div>
+    <div class="struct-item">
+      <div class="struct-time">20<span style="font-size:1rem">min</span></div>
+      <div class="struct-desc">Concept</div>
+    </div>
+    <div class="struct-item">
+      <div class="struct-time">60<span style="font-size:1rem">min</span></div>
+      <div class="struct-desc">Live Coding</div>
+    </div>
+    <div class="struct-item">
+      <div class="struct-time">20<span style="font-size:1rem">min</span></div>
+      <div class="struct-desc">Student Exercise</div>
+    </div>
+    <div class="struct-item">
+      <div class="struct-time">10<span style="font-size:1rem">min</span></div>
+      <div class="struct-desc">Q&amp;A</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HTML DAYS ── -->
+<div class="section-label" id="html">HTML — Days 1 &amp; 2</div>
+<div class="days-wrapper" style="margin-bottom:2rem">
+
+  <!-- DAY 1 -->
+  <div class="day-card html">
+    <div class="day-header">
+      <span class="day-number">DAY 01</span>
+      <span class="day-tag tag-html">HTML</span>
+    </div>
+    <div class="day-title">Introduction to HTML</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>What is the web</li>
+        <li>How websites work</li>
+        <li>HTML structure</li>
+        <li>Elements, Headings, Paragraphs</li>
+        <li>Lists, Links, Images</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">HTML is the <strong style="color:var(--text)">skeleton of a website</strong></p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Build a personal webpage</div>
+      <ul class="topic-list">
+        <li>Create index.html</li>
+        <li>Add HTML boilerplate</li>
+        <li>Add headings &amp; paragraphs</li>
+        <li>Add an image</li>
+        <li>Add links</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>Create SmartShop HTML structure</p>
+      <ul class="sub-items">
+        <li>Header</li>
+        <li>Navigation</li>
+        <li>Hero section</li>
+        <li>Products section</li>
+        <li>Footer</li>
+      </ul>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Create a <strong>restaurant webpage</strong> — must include title, menu list, image, and contact link</p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Create an <strong>About Me page</strong></p>
+      <ul>
+        <li>Photo</li>
+        <li>Hobbies</li>
+        <li>Links</li>
+      </ul>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Forgetting closing tags</li>
+        <li>Nesting tags incorrectly</li>
+        <li>Forgetting &lt;html&gt; &lt;body&gt; structure</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day-card html">
+    <div class="day-header">
+      <span class="day-number">DAY 02</span>
+      <span class="day-tag tag-html">HTML</span>
+    </div>
+    <div class="day-title">HTML Semantic Structure</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>Semantic tags</li>
+        <li>&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;</li>
+        <li>&lt;section&gt;, &lt;article&gt;, &lt;footer&gt;</li>
+        <li>Forms basics</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">Semantic HTML helps browsers and search engines <strong style="color:var(--text)">understand your website</strong>.</p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Improve SmartShop</div>
+      <ul class="topic-list">
+        <li>Add &lt;header&gt;, &lt;nav&gt;, &lt;main&gt;</li>
+        <li>Add &lt;section&gt;, &lt;footer&gt;</li>
+        <li>Add simple newsletter form</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop now has:</p>
+      <ul class="sub-items">
+        <li>Navigation menu</li>
+        <li>Product cards</li>
+        <li>Footer with contact</li>
+      </ul>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Create a <strong>blog page</strong> — must include article, header, footer, and navigation</p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Add a <strong>contact form</strong> to blog page</p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Using div for everything</li>
+        <li>Not using labels in forms</li>
+        <li>Incorrect nesting</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── CSS DAYS ── -->
+<div class="section-label" id="css">CSS — Days 3, 4 &amp; Responsive</div>
+<div class="days-wrapper" style="margin-bottom:2rem">
+
+  <!-- DAY 3 -->
+  <div class="day-card css">
+    <div class="day-header">
+      <span class="day-number">DAY 03</span>
+      <span class="day-tag tag-css">CSS</span>
+    </div>
+    <div class="day-title">CSS Fundamentals</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>What is CSS</li>
+        <li>Selectors</li>
+        <li>Colors, Fonts, Backgrounds</li>
+        <li>Borders</li>
+        <li>Box model</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">CSS is the <strong style="color:var(--text)">skin and clothing</strong> of the website.</p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Style SmartShop</div>
+      <ul class="topic-list">
+        <li>Change fonts</li>
+        <li>Style navigation</li>
+        <li>Add colors</li>
+        <li>Style product cards</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop now <strong style="color:var(--text)">looks like a store</strong></p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Style their <strong>blog page</strong> — must include colors, typography, and spacing</p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Design a <strong>landing page style</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Forgetting ;</li>
+        <li>Confusing class and id</li>
+        <li>Too many inline styles</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day-card css">
+    <div class="day-header">
+      <span class="day-number">DAY 04</span>
+      <span class="day-tag tag-css">CSS</span>
+    </div>
+    <div class="day-title">Layout with Flexbox &amp; Grid</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>display</li>
+        <li>Flexbox</li>
+        <li>Grid</li>
+        <li>Alignment &amp; spacing</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">Flexbox arranges items in <strong style="color:var(--text)">one direction</strong>. Grid arranges items in <strong style="color:var(--text)">two dimensions</strong>.</p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding</div>
+      <ul class="topic-list">
+        <li>Build product grid (4 products)</li>
+        <li>Add flex navigation</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop now has:</p>
+      <ul class="sub-items">
+        <li>Responsive product grid</li>
+        <li>Clean layout</li>
+      </ul>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Create a <strong>photo gallery grid</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Build a <strong>3 column landing page</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Forgetting display:flex</li>
+        <li>Confusing justify-content vs align-items</li>
+        <li>Grid template mistakes</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+
+  <!-- RESPONSIVE (after Day 4) -->
+  <div class="day-card css">
+    <div class="day-header">
+      <span class="day-number">DAY 04+</span>
+      <span class="day-tag tag-css">CSS</span>
+    </div>
+    <div class="day-title">Responsive Design</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>Media queries</li>
+        <li>Mobile-first design</li>
+        <li>Responsive images</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">Your site must work on <strong style="color:var(--text)">phones first</strong>.</p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Make SmartShop mobile friendly</div>
+      <ul class="topic-list">
+        <li>Stack layout</li>
+        <li>Responsive grid</li>
+        <li>Responsive navigation</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop works on mobile, tablet, and desktop</p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Make gallery <strong>responsive</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Create a <strong>responsive landing page</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Fixed widths</li>
+        <li>Forgetting viewport meta tag</li>
+        <li>Not testing mobile view</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── JAVASCRIPT DAYS ── -->
+<div class="section-label" id="js">JavaScript — Days 5 &amp; 6</div>
+<div class="days-wrapper" style="margin-bottom:2rem">
+
+  <!-- DAY 5 -->
+  <div class="day-card js">
+    <div class="day-header">
+      <span class="day-number">DAY 05</span>
+      <span class="day-tag tag-js">JavaScript</span>
+    </div>
+    <div class="day-title">JavaScript Fundamentals</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>Variables</li>
+        <li>Arrays</li>
+        <li>Objects</li>
+        <li>Functions</li>
+        <li>Console</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">JavaScript adds <strong style="color:var(--text)">brains to the website</strong>.</p>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Write scripts</div>
+      <ul class="topic-list">
+        <li>addToCart()</li>
+        <li>showMessage()</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>Add <strong style="color:var(--text)">Add to Cart button</strong> — show alert when clicked</p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Create a <strong>counter app</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Create a <strong>simple calculator</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Missing ;</li>
+        <li>Confusion between = and ==</li>
+        <li>Forgetting console.log debugging</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day-card js">
+    <div class="day-header">
+      <span class="day-number">DAY 06</span>
+      <span class="day-tag tag-js">JavaScript</span>
+    </div>
+    <div class="day-title">DOM Manipulation &amp; Events</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>DOM</li>
+        <li>querySelector</li>
+        <li>Event listeners</li>
+        <li>Modifying elements</li>
+      </ul>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding</div>
+      <ul class="topic-list">
+        <li>Add dynamic cart count</li>
+        <li>Click button → update cart</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop now has:</p>
+      <ul class="sub-items">
+        <li>Interactive cart</li>
+        <li>Dynamic updates</li>
+      </ul>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Build a <strong>todo list</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Add <strong>delete feature to todo list</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Wrong selectors</li>
+        <li>Not waiting for DOM to load</li>
+        <li>Incorrect event targets</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── REACT DAYS ── -->
+<div class="section-label" id="react">React — Days 7 &amp; 8</div>
+<div class="days-wrapper" style="margin-bottom:2rem">
+
+  <!-- DAY 7 -->
+  <div class="day-card react">
+    <div class="day-header">
+      <span class="day-number">DAY 07</span>
+      <span class="day-tag tag-react">React</span>
+    </div>
+    <div class="day-title">React Fundamentals</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>What is React</li>
+        <li>Components</li>
+        <li>JSX</li>
+        <li>Props</li>
+        <li>useState</li>
+      </ul>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-bottom:0.9rem;font-style:italic">React breaks UI into <strong style="color:var(--text)">reusable components</strong>.</p>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop becomes a <strong style="color:var(--text)">React app</strong></p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Build a <strong>React counter</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Build a <strong>React card component</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Forgetting key</li>
+        <li>Mixing HTML with JSX</li>
+        <li>Incorrect imports</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener" style="border-color:rgba(97,218,251,0.3);background:rgba(97,218,251,0.06);color:var(--react)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 7–8 React Repo on GitHub
+    </a>
+  </div>
+
+  <!-- DAY 8 -->
+  <div class="day-card react">
+    <div class="day-header">
+      <span class="day-number">DAY 08</span>
+      <span class="day-tag tag-react">React</span>
+    </div>
+    <div class="day-title">React Hooks, APIs &amp; Routing</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Topics</div>
+      <ul class="topic-list">
+        <li>useEffect</li>
+        <li>Fetching API</li>
+        <li>React Router</li>
+        <li>Dynamic pages</li>
+      </ul>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding</div>
+      <ul class="topic-list">
+        <li>Fetch products from API</li>
+        <li>Add pages: Home, Product Details, Cart</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop now uses <strong style="color:var(--text)">real product API</strong></p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Fetch <strong>users API</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Add <strong>product detail page</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Infinite useEffect loop</li>
+        <li>Incorrect dependency array</li>
+        <li>Wrong router setup</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener" style="border-color:rgba(97,218,251,0.3);background:rgba(97,218,251,0.06);color:var(--react)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 7–8 React Repo on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── GIT & DEPLOY ── -->
+<div class="section-label" id="git">Git, AI Tools &amp; Deployment — Day 9</div>
+<div class="days-wrapper" style="margin-bottom:4rem">
+
+  <div class="day-card git">
+    <div class="day-header">
+      <span class="day-number">DAY 09</span>
+      <span class="day-tag tag-git">Git &amp; Deploy</span>
+    </div>
+    <div class="day-title">Git, AI Tools &amp; Deployment</div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">📚</span>Git Basics</div>
+      <ul class="topic-list">
+        <li>init</li>
+        <li>add</li>
+        <li>commit</li>
+        <li>push</li>
+      </ul>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">🤖</span>AI for Developers</div>
+      <ul class="topic-list">
+        <li>ChatGPT</li>
+        <li>Claude</li>
+        <li>Lovable</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">💡 Prompt Examples</div>
+      <p style="color:var(--muted);font-size:0.78rem;margin-bottom:4px">Explain this JavaScript error in simple terms.</p>
+      <p style="color:var(--muted);font-size:0.78rem">Why does this React component re-render?</p>
+      <p style="margin-top:8px;font-size:0.75rem;color:var(--accent2)">AI helps you <strong>think faster</strong>, not <strong>think for you</strong>.</p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">💻</span>Live Coding — Deploy project</div>
+      <ul class="topic-list">
+        <li>git init</li>
+        <li>git add .</li>
+        <li>git commit</li>
+        <li>git push</li>
+        <li>Deploy to Vercel</li>
+      </ul>
+    </div>
+
+    <div class="project-box">
+      <div class="proj-label">🚀 Main Project — SmartShop</div>
+      <p>SmartShop becomes a <strong style="color:var(--text)">live website</strong></p>
+    </div>
+
+    <div class="exercise-box">
+      <div class="ex-label">✏️ Student Exercise</div>
+      <p>Push project to <strong>GitHub</strong></p>
+    </div>
+
+    <div class="hw-box">
+      <div class="hw-label">📝 Homework</div>
+      <p>Create <strong>portfolio README</strong></p>
+    </div>
+
+    <div class="day-section">
+      <div class="day-section-label"><span class="icon">⚠️</span>Common Mistakes</div>
+      <ul class="mistake-list">
+        <li>Forgetting .gitignore</li>
+        <li>Committing node_modules</li>
+        <li>Incorrect GitHub repo setup</li>
+      </ul>
+    </div>
+
+    <a class="repo-link" href="https://github.com" target="_blank" rel="noopener" style="border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.06);color:var(--green)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.1.82-.26.82-.58v-2.03c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.78 1.3 3.46.99.1-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.65.24 2.87.12 3.17.77.84 1.24 1.91 1.24 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58C20.56 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+      View Day 1–6 Repo on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── SKILLS ── -->
+<div class="section-label" id="skills">Skills Students Will Have</div>
+<div class="skills-section" style="margin-bottom:3rem">
+  <div class="skills-grid">
+    <div class="skill-card">
+      <h4><span class="badge" style="background:#ef4444"></span>Web Foundations</h4>
+      <ul>
+        <li>HTML semantic structure</li>
+        <li>CSS styling</li>
+        <li>Flexbox and Grid</li>
+        <li>Responsive design</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4><span class="badge" style="background:#f59e0b"></span>JavaScript</h4>
+      <ul>
+        <li>Variables</li>
+        <li>Functions</li>
+        <li>Arrays</li>
+        <li>DOM manipulation</li>
+        <li>Events</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4><span class="badge" style="background:#61dafb"></span>React</h4>
+      <ul>
+        <li>Components</li>
+        <li>Props</li>
+        <li>State</li>
+        <li>Hooks</li>
+        <li>Routing</li>
+        <li>API fetching</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4><span class="badge" style="background:#10b981"></span>Developer Workflow</h4>
+      <ul>
+        <li>Git</li>
+        <li>GitHub</li>
+        <li>Deployment</li>
+        <li>Debugging</li>
+      </ul>
+    </div>
+    <div class="skill-card">
+      <h4><span class="badge" style="background:#8b5cf6"></span>AI Workflow</h4>
+      <ul>
+        <li>Debugging with AI</li>
+        <li>Generating boilerplate</li>
+        <li>Code explanation</li>
+        <li>UI prototyping</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── LEARNING PATH ── -->
+<div class="section-label" id="path">Continuing Learning Path</div>
+<div class="path-section">
+  <div class="path-grid">
+    <div class="path-card">
+      <h4>Next Frontend Skills</h4>
+      <ul>
+        <li>Advanced React</li>
+        <li>TypeScript</li>
+        <li>Tailwind CSS</li>
+        <li>Next.js</li>
+      </ul>
+    </div>
+    <div class="path-card">
+      <h4>Portfolio Projects</h4>
+      <ul>
+        <li>Task manager</li>
+        <li>Blog platform</li>
+        <li>Full e-commerce site</li>
+      </ul>
+    </div>
+    <div class="path-card">
+      <h4>Job Preparation</h4>
+      <ul>
+        <li>GitHub portfolio</li>
+        <li>Technical interviews</li>
+        <li>Freelancing</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>2-Week Frontend Web Development Bootcamp &nbsp;·&nbsp; 10 Days &nbsp;·&nbsp; 2 Hours/Day</p>
+  <p style="margin-top:0.4rem;font-size:0.65rem;">AI helps you <strong>think faster</strong>, not <strong>think for you</strong>.</p>
+</footer>
+
+</body>
+</html>
